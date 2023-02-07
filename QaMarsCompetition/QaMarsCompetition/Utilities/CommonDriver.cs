@@ -16,7 +16,7 @@ namespace QaMarsCompetition.Utilities
         {
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
-            
+
 
         }
 
@@ -25,5 +25,15 @@ namespace QaMarsCompetition.Utilities
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
 
         }
+       
+
+        public void shutDown()
+        {
+            driver.Quit();
+        }
+
+
+
+
     }
 }

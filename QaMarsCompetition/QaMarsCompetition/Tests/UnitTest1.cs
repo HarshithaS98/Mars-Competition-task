@@ -5,8 +5,15 @@ using QaMarsCompetition.Utilities;
 
 namespace QaMarsCompetition.Tests
 {
-    public class Tests : CommonDriver
+    public class Tests
+    { 
+         CommonDriver driver;
+    public Tests()
     {
+            driver = new CommonDriver();
+    }
+
+    
        
         [SetUp]
         public void loginsteps()
@@ -14,18 +21,18 @@ namespace QaMarsCompetition.Tests
           
             // Login page object initialization and definition
             LoginPage loginpageObj = new LoginPage();
-            loginpageObj .CreateLogin(driver);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+            loginpageObj .CreateLogin();
+          
         }
 
-        [Test , Order(1)]
-        public void Addskill()
+        [TestCase("Qa", "APITester","2" )]
+        public void Addskill(string title, string description ,string credit)
         {
             ShareSkill shareskillobj = new ShareSkill();
-                shareskillobj.ShareSkills();
+                shareskillobj.ShareSkills(title ,description ,credit);
         }
 
-        [Test , Order(2)]
+        [Test]
         public void EdSkill()
         {
                 EditSkill editskillobj = new EditSkill();
@@ -37,6 +44,11 @@ namespace QaMarsCompetition.Tests
 
             DeleteSkill deleteskillobj = new DeleteSkill();
             deleteskillobj.DeleteSkills();
+        }
+        [TearDown]
+        public void quit()
+        {
+            driver.shutDown();
         }
     }
 }

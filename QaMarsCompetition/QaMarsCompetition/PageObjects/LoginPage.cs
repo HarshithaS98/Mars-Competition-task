@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QaMarsCompetition.Utilities;
 
 namespace QaMarsCompetition.PageObjects
 {
-    public class LoginPage
+    public class LoginPage : CommonDriver
     {
-        public void CreateLogin(IWebDriver driver)
+        public void CreateLogin()
         {
             driver = new ChromeDriver();
             IWebElement element;
@@ -36,9 +37,7 @@ namespace QaMarsCompetition.PageObjects
             element = driver.FindElement(By.XPath("/html/body/div[2]/div/div/div[1]/div/div[4]/button"));
             element.Click();
 
-            // click on share skill button
-            element = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[1]/div/div[2]/a"));
-            element.Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
         }
     }
 }
