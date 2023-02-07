@@ -32,11 +32,11 @@ namespace QaMarsCompetition.Tests
                 shareskillobj.ShareSkills(title ,description ,credit);
         }
 
-        [Test]
-        public void EdSkill()
+        [TestCase("Testengineer","QaIntern","2")]
+        public void EdSkill(string edittitle, string editdescription, string skillexchange)
         {
                 EditSkill editskillobj = new EditSkill();
-                editskillobj.EditSkills();
+                editskillobj.EditSkills(edittitle,editdescription,skillexchange);
         }
         [Test , Order(3)]
         public void DelSkill()
