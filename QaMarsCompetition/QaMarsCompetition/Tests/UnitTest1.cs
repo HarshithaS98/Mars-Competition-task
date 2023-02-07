@@ -26,6 +26,7 @@ namespace QaMarsCompetition.Tests
         }
 
         [TestCase("Qa", "APITester","2" ),Order(1)]
+        [TestCase("QualityAnalyst","Performance","4")]
         public void Addskill(string title, string description ,string credit)
         {
             ShareSkill shareskillobj = new ShareSkill();
@@ -33,6 +34,7 @@ namespace QaMarsCompetition.Tests
         }
 
         [TestCase("Testengineer","QaIntern","Newman"),Order(2)]
+        [TestCase("Automation","Loadtest","Jira")]
         public void EdSkill(string edittitle, string editdescription, string skillexchange)
         {
                 EditSkill editskillobj = new EditSkill();
