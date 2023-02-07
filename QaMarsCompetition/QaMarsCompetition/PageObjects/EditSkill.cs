@@ -31,7 +31,7 @@ namespace QaMarsCompetition.PageObjects
       
         public IWebElement edithidden => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[10]/div[2]/div/div[2]/div/input"));
         public IWebElement editsave => driver.FindElement(By.XPath(" //*[@id=\"service-listing-section\"]/div[2]/div/form/div[11]/div/input[1]"));
-        public void EditSkills()
+        public void EditSkills(string edittitle, string editdescription, string skillexchange)
         {
             //share skillbutton
             //editshareskillbutton.Click();
@@ -44,12 +44,12 @@ namespace QaMarsCompetition.PageObjects
             
             // edit title details
             edittitlebox.Clear();
-            edittitlebox.SendKeys("Test Analyst");
+            edittitlebox.SendKeys(edittitle);
 
             
             // edit description details
             editdescriptionbox.Clear();
-            editdescriptionbox.SendKeys("Automation Testing Engineer");
+            editdescriptionbox.SendKeys(editdescription);
 
 
             //edit tagstab details
@@ -73,7 +73,7 @@ namespace QaMarsCompetition.PageObjects
 
             //edit skillexchange
             editskillechangeApi.Click();
-            editskillechangeApi.SendKeys("NewMan");
+            editskillechangeApi.SendKeys(skillexchange);
             editskillechangeApi.SendKeys(Keys.Enter);
           
 
