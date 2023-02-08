@@ -1,36 +1,57 @@
+global using AventStack.ExtentReports.Reporter;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using QaMarsCompetition.PageObjects;
 using QaMarsCompetition.Utilities;
 
+using AventStack.ExtentReports;
+
+using NUnit.Framework;
+
 namespace QaMarsCompetition.Tests
 {
+    [TestFixture]
     public class Tests
     { 
          CommonDriver driver;
-    public Tests()
+
+        public static ExtentTest test;
+        public static ExtentReports extent;
+
+
+        public Tests()
     {
             driver = new CommonDriver();
-    }
+         
+;        }
 
     
        
         [SetUp]
-        public void loginsteps()
+        public  void loginsteps()
         {
-          
-            // Login page object initialization and definition
-            LoginPage loginpageObj = new LoginPage();
+
+            extent = new ExtentReports();
+            var htmlreporter = new ExtentHtmlReporter(@"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition" + DateTime.Now.ToString("_MMddyyyy_hhmmtt") + ".html");
+            extent.AttachReporter(htmlreporter);
+           
+
+        // Login page object initialization and definition
+        LoginPage loginpageObj = new LoginPage();
             loginpageObj .CreateLogin();
           
         }
+        
 
         [TestCase("Qa", "APITester","2" ),Order(1)]
         [TestCase("QualityAnalyst","Performance","4")]
         public void Addskill(string title, string description ,string credit)
         {
+            test = null;
+            test = extent.CreateTest("Test add skills").Info("Skills added in shareskill page");
             ShareSkill shareskillobj = new ShareSkill();
-                shareskillobj.ShareSkills(title ,description ,credit);
+            shareskillobj.ShareSkills(title ,description ,credit);
+            test.Log(Status.Info, "skills added");
         }
 
         [TestCase("Testengineer","QaIntern","Newman"),Order(2)]
