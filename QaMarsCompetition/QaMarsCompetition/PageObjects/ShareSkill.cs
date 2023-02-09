@@ -39,6 +39,7 @@ namespace QaMarsCompetition.PageObjects
 
             // click on share skill button
             shareskillbutton.Click();
+        
 
             // identify  title tool box
             titlebox.SendKeys(title);

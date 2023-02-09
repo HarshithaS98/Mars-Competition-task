@@ -1,10 +1,11 @@
 global using AventStack.ExtentReports.Reporter;
+global using AventStack.ExtentReports;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using QaMarsCompetition.PageObjects;
 using QaMarsCompetition.Utilities;
 
-using AventStack.ExtentReports;
+
 
 using NUnit.Framework;
 
@@ -16,28 +17,30 @@ namespace QaMarsCompetition.Tests
          CommonDriver driver;
 
         public static ExtentTest test;
-        public static ExtentReports extent;
+        
+        public static ExtentReports extent = new ExtentReports();
 
 
         public Tests()
     {
             driver = new CommonDriver();
-         
-;        }
+
+           
+    }
 
     
        
         [SetUp]
         public  void loginsteps()
         {
-
-            extent = new ExtentReports();
-            var htmlreporter = new ExtentHtmlReporter(@"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition" + DateTime.Now.ToString("_MMddyyyy_hhmmtt") + ".html");
+           // extent = new ExtentReports();
+            var htmlreporter = new ExtentHtmlReporter(@"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\QaMarsCompetition\" + DateTime.Now.ToString("_MMddyyyy_hhmmtt") + ".html");
             extent.AttachReporter(htmlreporter);
-           
 
-        // Login page object initialization and definition
-        LoginPage loginpageObj = new LoginPage();
+
+
+            // Login page object initialization and definition
+            LoginPage loginpageObj = new LoginPage();
             loginpageObj .CreateLogin();
           
         }
@@ -58,20 +61,26 @@ namespace QaMarsCompetition.Tests
         [TestCase("Automation","Loadtest","Jira")]
         public void EdSkill(string edittitle, string editdescription, string skillexchange)
         {
-                EditSkill editskillobj = new EditSkill();
-                editskillobj.EditSkills(edittitle,editdescription,skillexchange);
+            test = null;
+            test = extent.CreateTest("Test Edit skills");
+            EditSkill editskillobj = new EditSkill();
+            editskillobj.EditSkills(edittitle,editdescription,skillexchange);
+            test.Log(Status.Info, "Skills edited in Manage listing page");
         }
         [Test , Order(3)]
         public void DelSkill()
         {
-
+            test = null;
+            test = extent.CreateTest("Test Delete skills");
             DeleteSkill deleteskillobj = new DeleteSkill();
             deleteskillobj.DeleteSkills();
+            test.Log(Status.Info, "Skills Deleted in manage listing page ");
         }
         [TearDown]
         public void quit()
         {
             driver.shutDown();
+            extent.Flush();
         }
     }
 }
