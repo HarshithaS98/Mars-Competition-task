@@ -30,7 +30,7 @@ namespace QaMarsCompetition.Tests
 
     
        
-        [SetUp]
+        [OneTimeSetUp]
         public  void loginsteps()
         {
            // extent = new ExtentReports();
@@ -76,7 +76,7 @@ namespace QaMarsCompetition.Tests
             deleteskillobj.DeleteSkills();
             test.Log(Status.Info, "Skills Deleted in manage listing page ");
         }
-        [TearDown]
+        [OneTimeTearDown]
         public void quit()
         {
             driver.shutDown();

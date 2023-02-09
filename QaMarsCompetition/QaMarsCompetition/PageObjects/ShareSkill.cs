@@ -3,12 +3,15 @@ using OpenQA.Selenium.Support.UI;
 using QaMarsCompetition.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using AutoIt;
 using static System.Collections.Specialized.BitVector32;
+using System.Security.Cryptography.X509Certificates;
 
 namespace QaMarsCompetition.PageObjects
 {
@@ -32,7 +35,10 @@ namespace QaMarsCompetition.PageObjects
         public IWebElement active => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[10]/div[2]/div/div[1]/div/input"));
 
         public IWebElement save => driver.FindElement(By.XPath(" //*[@id=\"service-listing-section\"]/div[2]/div/form/div[11]/div/input[1]"));
-       
+
+        //AutoItScript
+        
+
         public void ShareSkills(string title, string description, string credit)
 
         {
@@ -79,15 +85,25 @@ namespace QaMarsCompetition.PageObjects
             //skillexchange.SendKeys("Postman");
             //skillexchange.SendKeys(Keys.Enter);
 
-          
-
+            ////click on worksample btton. 
+               IWebElement Worksample = driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[9]/div/div[2]/section/div/label/div/span/i"));
+                Worksample.Click();
+         
+            AutoItX.WinActivate("[CLASS:#32770");
+            
+            AutoItX.ControlFocus("[CLASS:#32770]", "", "Edit1");
+            Thread.Sleep(1000);
+            
+            AutoItX.Send(@"D:\My Testing resume\Sample_Upload_File.txt");
+            Thread.Sleep(1000);
+            
+            AutoItX.Send("{ENTER}");
+       
             //identify active and click active
-             active.Click();
+            active.Click();
 
             // identify save button
              save.Click();
-           
-
 
         }
     }
