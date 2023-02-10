@@ -10,6 +10,7 @@ namespace QaMarsCompetition.PageObjects
 {
     public class EditSkill : CommonDriver
     {
+        public bool skilledited = false;
         //public IWebElement editshareskillbutton => driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[1]/div/div[2]/a"));
         public IWebElement manageListing => driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[1]/div/a[3]"));
         public IWebElement findEdit => driver.FindElement(By.XPath("//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr/td[8]/div/button[2]/i"));
@@ -81,7 +82,7 @@ namespace QaMarsCompetition.PageObjects
             edithidden.Click();
             //save edited details
             editsave.Click();
-
-        }
+             skilledited = true;
+    }
     }
 }

@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using QaMarsCompetition.PageObjects;
 using QaMarsCompetition.Utilities;
-
+using FluentAssertions;
 
 
 using NUnit.Framework;
@@ -55,6 +55,8 @@ namespace QaMarsCompetition.Tests
             ShareSkill shareskillobj = new ShareSkill();
             shareskillobj.ShareSkills(title ,description ,credit);
             test.Log(Status.Info, "skills added");
+            shareskillobj.skillAdded.Should().BeTrue();
+
         }
 
         [TestCase("Testengineer","QaIntern","Newman"),Order(2)]
@@ -66,6 +68,7 @@ namespace QaMarsCompetition.Tests
             EditSkill editskillobj = new EditSkill();
             editskillobj.EditSkills(edittitle,editdescription,skillexchange);
             test.Log(Status.Info, "Skills edited in Manage listing page");
+            editskillobj.skilledited.Should().BeTrue();
         }
         [Test , Order(3)]
         public void DelSkill()
@@ -75,6 +78,7 @@ namespace QaMarsCompetition.Tests
             DeleteSkill deleteskillobj = new DeleteSkill();
             deleteskillobj.DeleteSkills();
             test.Log(Status.Info, "Skills Deleted in manage listing page ");
+            deleteskillobj.skilldeleted.Should().BeTrue();
         }
         [OneTimeTearDown]
         public void quit()

@@ -10,7 +10,7 @@ namespace QaMarsCompetition.PageObjects
 {
     public class DeleteSkill : CommonDriver
     {
-        
+        public bool skilldeleted = false;
         public IWebElement delmanageListing => driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[1]/div/a[3]"));
         public IWebElement findDel => driver.FindElement(By.XPath("//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr/td[8]/div/button[3]/i"));
         public IWebElement delebutton => driver.FindElement(By.XPath("/html/body/div[2]/div/div[3]/button[2]"));
@@ -24,6 +24,7 @@ namespace QaMarsCompetition.PageObjects
             // pop up window to click ok
             //driver.SwitchTo().Alert().Accept();
             delebutton.Click();
+            skilldeleted = true;
         }
     }
 }

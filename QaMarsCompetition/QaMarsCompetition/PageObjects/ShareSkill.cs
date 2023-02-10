@@ -17,7 +17,9 @@ namespace QaMarsCompetition.PageObjects
 {
     public class ShareSkill : CommonDriver
     {
-         public IWebElement shareskillbutton => driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[1]/div/div[2]/a"));
+        public bool skillAdded = false;
+
+        public IWebElement shareskillbutton => driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[1]/div/div[2]/a"));
         public IWebElement titlebox => driver.FindElement(By.Name("title"));
        public IWebElement descriptionbox => driver.FindElement(By.Name("description"));
 
@@ -82,8 +84,7 @@ namespace QaMarsCompetition.PageObjects
             // identify skill exchange  and select credit
             skillexchange.Click();
             exchangecredit.SendKeys(credit);
-            //skillexchange.SendKeys("Postman");
-            //skillexchange.SendKeys(Keys.Enter);
+         
 
             ////click on worksample btton. 
                IWebElement Worksample = driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[9]/div/div[2]/section/div/label/div/span/i"));
@@ -104,7 +105,7 @@ namespace QaMarsCompetition.PageObjects
 
             // identify save button
              save.Click();
-
+            skillAdded = true;
         }
     }
 }
