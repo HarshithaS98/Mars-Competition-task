@@ -20,11 +20,11 @@ namespace QaMarsCompetition.Utilities
 
         }
 
-        public static void Waits()
-        {
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+        //public static void Waits()
+        //{
+        //    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
 
-        }
+        //}
        
 
         public void shutDown()

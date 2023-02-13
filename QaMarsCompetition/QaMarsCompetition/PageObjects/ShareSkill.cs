@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿//using ExcelDataReader;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using QaMarsCompetition.Utilities;
 using System;
@@ -12,13 +13,25 @@ using System.Xml.Linq;
 using AutoIt;
 using static System.Collections.Specialized.BitVector32;
 using System.Security.Cryptography.X509Certificates;
+using SharpCompress.Common;
+using System.Data;
+using System.IO;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using NPOI.HSSF.UserModel;
+using ExcelDataReader;
 
 namespace QaMarsCompetition.PageObjects
 {
     public class ShareSkill : CommonDriver
     {
         public bool skillAdded = false;
-
+        //private IExcelDataReader reader;
+        private string filePath, title, description,credit;
+        private FileStream fileStream;
+        public DataSet dataSet;
+        private DataTable dataTable;
+        
         public IWebElement shareskillbutton => driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[1]/div/div[2]/a"));
         public IWebElement titlebox => driver.FindElement(By.Name("title"));
        public IWebElement descriptionbox => driver.FindElement(By.Name("description"));
@@ -37,24 +50,56 @@ namespace QaMarsCompetition.PageObjects
         public IWebElement active => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[10]/div[2]/div/div[1]/div/input"));
 
         public IWebElement save => driver.FindElement(By.XPath(" //*[@id=\"service-listing-section\"]/div[2]/div/form/div[11]/div/input[1]"));
+       
+        public void ExcelReadDataForskillspagedatadriven()
+        {
+             //Path to the excel file with data driven
+            filePath = @"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\QaMarsCompetition\Excelsheet.xls";
+            //Encoding excel file stream
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            //Reading skills title decsription credit from excel file to be used in skill page
+            fileStream = File.Open(filePath, FileMode.Open, FileAccess.Read);
+            IExcelDataReader  reader = ExcelReaderFactory.CreateReader(fileStream);
+            //Getting the excel file as a dataset
+            dataSet = reader.AsDataSet();
+            //reader.DataSEt
+            //Since only 1 sheet is in the excel file, index 0 is taken
+            dataTable = dataSet.Tables[0];
+            title = dataTable.Rows[1][0].ToString();
+            description = dataTable.Rows[1][1].ToString();
+            credit = dataTable.Rows[1][2].ToString();
+        }
 
-        //AutoItScript
-        
 
-        public void ShareSkills(string title, string description, string credit)
+        public void ShareSkills()
 
         {
+            //getting data from excel sheet
+            ExcelReadDataForskillspagedatadriven();
+            // Click on the Share Skill button
+             shareskillbutton.Click();
 
-            // click on share skill button
-            shareskillbutton.Click();
-        
+            if (!string.IsNullOrEmpty(title))
+            {
+                // Identify the title text box
+                titlebox.SendKeys(title);
+            }
+            else
+            {
+                // Log or throw an exception indicating that the title value is missing
+            }
 
-            // identify  title tool box
-            titlebox.SendKeys(title);
+            if (!string.IsNullOrEmpty(description))
+            {
+                // Identify the description text box
+                descriptionbox.SendKeys(description);
+            }
+            else
+            {
+                // Log or throw an exception indicating that the description value is missing
+            }
 
-            //identify description
-            descriptionbox.SendKeys(description);
-            
+
             //identify category
             SelectElement categoryBox = new SelectElement(driver.FindElement(By.Name("categoryId")));
             categoryBox.SelectByText("Programming & Tech");
@@ -83,11 +128,17 @@ namespace QaMarsCompetition.PageObjects
 
             // identify skill exchange  and select credit
             skillexchange.Click();
-            exchangecredit.SendKeys(credit);
-         
-
+            if (!string.IsNullOrEmpty(description))
+            {
+                // Identify the description text box
+                descriptionbox.SendKeys(description);
+            }
+            else
+            {
+                // Log or throw an exception indicating that the description value is missing
+            }
             ////click on worksample btton. 
-               IWebElement Worksample = driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[9]/div/div[2]/section/div/label/div/span/i"));
+            IWebElement Worksample = driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[9]/div/div[2]/section/div/label/div/span/i"));
                 Worksample.Click();
          
             AutoItX.WinActivate("[CLASS:#32770");
