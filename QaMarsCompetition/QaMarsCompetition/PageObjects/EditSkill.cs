@@ -83,7 +83,10 @@ namespace QaMarsCompetition.PageObjects
             tagsedittab.Click();
             edittagstab.SendKeys("API");
             edittagstab.SendKeys(Keys.Enter);
-
+            // screenshot 4 edit skills
+            Screenshot screenshot4 = ((ITakesScreenshot)driver).GetScreenshot();
+            string screenshotPath4 = @"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\Screenshots\screenshot4 edit skills.png";
+            screenshot4.SaveAsFile(screenshotPath4);
             //edit service 
 
             editservice.Click();

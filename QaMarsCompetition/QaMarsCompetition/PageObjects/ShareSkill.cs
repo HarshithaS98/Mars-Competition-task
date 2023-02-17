@@ -98,7 +98,10 @@ namespace QaMarsCompetition.PageObjects
             {
                 // Log or throw an exception indicating that the description value is missing
             }
-
+            // Take screenshot
+            Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+            string screenshotPath = @"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\Screenshots\screenshots.png";
+            screenshot.SaveAsFile(screenshotPath);
 
             //identify category
             SelectElement categoryBox = new SelectElement(driver.FindElement(By.Name("categoryId")));
@@ -117,9 +120,12 @@ namespace QaMarsCompetition.PageObjects
             
             //identify location type
              location.Click();
-            
+            Screenshot screenshot1 = ((ITakesScreenshot)driver).GetScreenshot();
+            string screenshotPath1 = @"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\Screenshots\screenshot2 Autoit.png";
+            screenshot1.SaveAsFile(screenshotPath1);
+
             // identify available days
-             thu.Click();
+            thu.Click();
             starttime.SendKeys("300pm");
             endtime.SendKeys("400pm");
 
@@ -140,7 +146,10 @@ namespace QaMarsCompetition.PageObjects
             ////click on worksample btton. 
             IWebElement Worksample = driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[9]/div/div[2]/section/div/label/div/span/i"));
                 Worksample.Click();
-         
+            Screenshot screenshot2 = ((ITakesScreenshot)driver).GetScreenshot();
+            string screenshotPath2 = @"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\Screenshots\screenshot2 Autoit.png";
+            screenshot2.SaveAsFile(screenshotPath2);
+
             AutoItX.WinActivate("[CLASS:#32770");
             
             AutoItX.ControlFocus("[CLASS:#32770]", "", "Edit1");
@@ -150,12 +159,16 @@ namespace QaMarsCompetition.PageObjects
             Thread.Sleep(1000);
             
             AutoItX.Send("{ENTER}");
-       
+            
             //identify active and click active
             active.Click();
 
+
             // identify save button
              save.Click();
+            Screenshot screenshot3 = ((ITakesScreenshot)driver).GetScreenshot();
+            string screenshotPath3 = @"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\Screenshots\screenshot1.png";
+            screenshot3.SaveAsFile(screenshotPath3);
             skillAdded = true;
         }
     }

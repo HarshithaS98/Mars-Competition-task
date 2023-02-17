@@ -1,5 +1,6 @@
 global using AventStack.ExtentReports.Reporter;
 global using AventStack.ExtentReports;
+global using AventStack.ExtentReports.Reporter.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using QaMarsCompetition.PageObjects;
@@ -20,7 +21,7 @@ namespace QaMarsCompetition.Tests
         
         public static ExtentReports extent = new ExtentReports();
 
-     
+       
 
         public Tests()
     {
@@ -36,7 +37,7 @@ namespace QaMarsCompetition.Tests
         {
            var htmlreporter = new ExtentHtmlReporter(@"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\QaMarsCompetition\" + DateTime.Now.ToString("_MMddyyyy_hhmmtt") + ".html");
             extent.AttachReporter(htmlreporter);
-
+            
             // Login page object initialization and definition
             LoginPage loginpageObj = new LoginPage();
             loginpageObj .CreateLogin();

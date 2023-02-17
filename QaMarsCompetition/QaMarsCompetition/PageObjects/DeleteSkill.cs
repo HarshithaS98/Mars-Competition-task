@@ -21,8 +21,11 @@ namespace QaMarsCompetition.PageObjects
 
             // identify delete button
              findDel.Click();
-            // pop up window to click ok
-            //driver.SwitchTo().Alert().Accept();
+            //screnshot5 for del skills
+            Screenshot screenshot5 = ((ITakesScreenshot)driver).GetScreenshot();
+            string screenshotPath5 = @"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\Screenshots\screenshot5 del skills.png";
+            screenshot5.SaveAsFile(screenshotPath5);
+           
             delebutton.Click();
             skilldeleted = true;
         }
