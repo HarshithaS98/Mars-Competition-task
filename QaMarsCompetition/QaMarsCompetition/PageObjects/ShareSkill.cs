@@ -1,4 +1,4 @@
-﻿//using ExcelDataReader;
+﻿
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using QaMarsCompetition.Utilities;
@@ -20,18 +20,21 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.HSSF.UserModel;
 using ExcelDataReader;
+using AventStack.ExtentReports;
 
 namespace QaMarsCompetition.PageObjects
 {
     public class ShareSkill : CommonDriver
     {
         public bool skillAdded = false;
-        //private IExcelDataReader reader;
+        private IExcelDataReader reader;
         private string filePath, title, description,credit;
         private FileStream fileStream;
         public DataSet dataSet;
         private DataTable dataTable;
-        
+        public static ExtentTest test1;
+
+        public static ExtentReports extent1 = new ExtentReports();
         public IWebElement shareskillbutton => driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[1]/div/div[2]/a"));
         public IWebElement titlebox => driver.FindElement(By.Name("title"));
        public IWebElement descriptionbox => driver.FindElement(By.Name("description"));
@@ -50,7 +53,8 @@ namespace QaMarsCompetition.PageObjects
         public IWebElement active => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[10]/div[2]/div/div[1]/div/input"));
 
         public IWebElement save => driver.FindElement(By.XPath(" //*[@id=\"service-listing-section\"]/div[2]/div/form/div[11]/div/input[1]"));
-       
+         
+        
         public void ExcelReadDataForskillspagedatadriven()
         {
              //Path to the excel file with data driven
@@ -62,7 +66,7 @@ namespace QaMarsCompetition.PageObjects
             IExcelDataReader  reader = ExcelReaderFactory.CreateReader(fileStream);
             //Getting the excel file as a dataset
             dataSet = reader.AsDataSet();
-            //reader.DataSEt
+            
             //Since only 1 sheet is in the excel file, index 0 is taken
             dataTable = dataSet.Tables[0];
             title = dataTable.Rows[1][0].ToString();
@@ -76,8 +80,11 @@ namespace QaMarsCompetition.PageObjects
         {
             //getting data from excel sheet
             ExcelReadDataForskillspagedatadriven();
+            ExtentHtmlReporter htmlreporter = new ExtentHtmlReporter(@"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\Extent Reports\Extent Reports Add SKills\" + DateTime.Now.ToString("_MMddyyyy_hhmmtt") + ".html");
+            extent1.AttachReporter(htmlreporter);
             // Click on the Share Skill button
-             shareskillbutton.Click();
+            shareskillbutton.Click();
+            test1 = extent1.CreateTest("Test description added  in skills").Info("description added in shareskill page");
 
             if (!string.IsNullOrEmpty(title))
             {
@@ -98,6 +105,8 @@ namespace QaMarsCompetition.PageObjects
             {
                 // Log or throw an exception indicating that the description value is missing
             }
+            
+            test1.Log(Status.Info, "skills added");
             // Take screenshot
             Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
             string screenshotPath = @"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\Screenshots\screenshots.png";
@@ -106,7 +115,8 @@ namespace QaMarsCompetition.PageObjects
             //identify category
             SelectElement categoryBox = new SelectElement(driver.FindElement(By.Name("categoryId")));
             categoryBox.SelectByText("Programming & Tech");
-           
+            test1.Log(Status.Pass, "category selected");
+
             //identify subcategory
             SelectElement subcategoryBox = new SelectElement(driver.FindElement(By.Name("subcategoryId")));
             subcategoryBox.SelectByText("QA");
@@ -114,12 +124,14 @@ namespace QaMarsCompetition.PageObjects
             //identify tags
             tagstab.SendKeys("Selenium");
             tagstab.SendKeys(Keys.Enter);
+            test1.Log(Status.Info, "tags added");
 
             //identify service type
-             service.Click();
-            
+            service.Click();
+            test1.Log(Status.Info, "services selected");
             //identify location type
-             location.Click();
+            location.Click();
+            test1.Log(Status.Pass, "Loaction selected");
             Screenshot screenshot1 = ((ITakesScreenshot)driver).GetScreenshot();
             string screenshotPath1 = @"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\Screenshots\screenshot2 Autoit.png";
             screenshot1.SaveAsFile(screenshotPath1);
@@ -128,7 +140,7 @@ namespace QaMarsCompetition.PageObjects
             thu.Click();
             starttime.SendKeys("300pm");
             endtime.SendKeys("400pm");
-
+            test1.Log(Status.Info, "Availabledays added");
             //identify skill trade and select skillexchange
             skilltrade.Click();
 
@@ -159,17 +171,19 @@ namespace QaMarsCompetition.PageObjects
             Thread.Sleep(1000);
             
             AutoItX.Send("{ENTER}");
-            
+            test1.Log(Status.Info, "Autoit done");
             //identify active and click active
             active.Click();
 
 
             // identify save button
              save.Click();
+            test1.Log(Status.Info, "All skills added and saved");
             Screenshot screenshot3 = ((ITakesScreenshot)driver).GetScreenshot();
             string screenshotPath3 = @"D:\QAMarsCompetition\QaMarsCompetition\QaMarsCompetition\Screenshots\screenshot1.png";
             screenshot3.SaveAsFile(screenshotPath3);
             skillAdded = true;
+            extent1.Flush();
         }
     }
 }
